@@ -1,5 +1,6 @@
 package com.dipi.inmemory_api_mock_mvc_test.service;
 
+import com.dipi.inmemory_api_mock_mvc_test.exception.CustomClassException;
 import com.dipi.inmemory_api_mock_mvc_test.payload.Presentation;
 import com.dipi.inmemory_api_mock_mvc_test.payload.Slide;
 import org.springframework.stereotype.Service;
@@ -24,8 +25,13 @@ public class InMemoryDataStoreImpl implements InMemoryDataStore  {
     }
     @Override
     public Presentation getPresentation(String id) {
-        return presentationsMap.get(id);
+        if (presentationsMap.containsKey(id)) {
+            return presentationsMap.get(id);
+        } else {
+            throw new CustomClassException("User not found with id: " + id);
+        }
     }
+
 
 
 
